@@ -1,2 +1,65 @@
 Run scraper with node index.js
 Run test with yarn run test
+# 🔍 Facebook Comment Scraper (Cheerio + Node.js)
+
+This project is a lightweight HTML scraper that extracts **comment links, comment content**, and **pagination paths** from saved Facebook post HTML files. It's designed for local parsing of static HTML using `cheerio`, allowing flexible testing and development without live scraping.
+
+---
+
+## ✨ Key Features
+
+- 📄 Parses saved Facebook post HTML files
+- 🧵 Extracts individual comment content
+- 🔗 Detects "View more comments" pagination links
+- 📎 Isolates post-level comment links from full page dumps
+- 🧪 Includes test HTML files for reproducible debugging
+
+---
+
+## 🧠 How It Works
+
+The script uses `cheerio` to simulate DOM traversal of Facebook post structures. Each function targets a different aspect of the comment interface.
+
+### ✔️ `scrapePostsWithComments(html)`
+Returns links to all posts that have comment sections (based on `X Comments` footer pattern).
+
+### ✔️ `scrapeCommentsFromPost(html)`
+Returns an array of comment content and the link to load more (pagination logic).
+
+### ✔️ `scrapeShowMoreLink(html)`
+Extracts the “Show more” link for posts with truncated content.
+
+---
+
+## 🗂️ Project Structure
+📁 test-pages/ → Sample HTML files from Facebook
+📄 index.js → Main scraper logic (exports 3 core functions)
+🖼️ Facebook_screenshot.png → Example post view (reference)
+📝 Readme.rtf → Original notes (deprecated)
+📦 package.json → Project dependencies
+
+
+---
+
+## 🚀 Usage
+
+1. Clone the repo  
+2. Run `npm install` to get `cheerio`  
+3. Load any `.html` file from `/test-pages` using Node.js `fs.readFileSync()`  
+4. Pass it into one of the scraper functions from `index.js`
+
+```js
+const fs = require("fs");
+const { scrapeCommentsFromPost } = require("./index");
+
+const html = fs.readFileSync("./test-pages/moreComments.test.html", "utf-8");
+const result = scrapeCommentsFromPost(html);
+
+console.log(result);
+
+🧰 Tech Stack
+Node.js
+
+Cheerio.js
+
+HTML snapshots (offline Facebook content)
